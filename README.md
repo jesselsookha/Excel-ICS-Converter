@@ -2,213 +2,317 @@
 
 **Excel → ICS (Outlook / Apple / Google)**
 
-■ **What it does**  
-This tool converts a lecturer’s **Excel timetable** (as exported from the campus system) into an **ICS calendar file** that can be imported into **Outlook**, **Apple Calendar**, or **Google Calendar**. All parsing happens **locally in the browser**—no uploads to any server.
+![GitHub Pages](https://img.shields.io/badge/Live%20Site-GitHub%20Pages-blue?logo=github)
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
+![Built with JavaScript](https://img.shields.io/badge/Built%20with-JavaScript-yellow?logo=javascript)
+![Privacy](https://img.shields.io/badge/Data-Local%20Only-success)
 
-■ **Who it is for**  
-Lecturers who receive a calendar‑style Excel timetable and want an up‑to‑date personal calendar with classroom sessions, while optionally including **Public Holidays** and **NOT AVAIL** days.
+---
 
-***
+## ◆ What it does
 
-## Contents
+This tool converts a lecturer’s **Excel timetable** (as exported from the campus system) into an **ICS calendar file** that can be imported into **Outlook**, **Apple Calendar**, or **Google Calendar**.
 
-*   \#features
-*   \#quick-start-github-pages-or-local
-*   \#file--folder-structure
-*   \#usage-walkthrough
-    *   \#1-export-the-excel-timetable
-    *   \#2-convert-to-ics
-    *   \#3-import-into-outlook--apple--google
-    *   \#4-recommended-update-workflow
-*   \#public-holidays-south-africa
-*   \#configuration-update-holidays-for-a-new-year
-*   \#data-handling--privacy
-*   \#troubleshooting
-*   \#technical-notes
-*   \#license
+All parsing happens **locally in the browser**—no uploads to any server.
 
-***
+---
 
-## Features
+## ◇ Who it is for
 
-● **Excel → ICS** in one page  
-● **Local parsing** using a local copy of SheetJS (no network calls)  
-● **Public Holiday recognition** for South Africa (by date)  
-● Optional inclusion of **Holidays** and **NOT AVAIL** as **single all‑day blocks** per day (no duplicates per period)  
-● **Stable UIDs** for events to reduce accidental duplicates if a user re‑imports into the same calendar  
-● **Calendar metadata** in ICS (default calendar name: **Teaching Timetable**)  
-● **Compact “Next 7 Days”** preview and a quick list of **Subjects & Groups**  
-● Clean **light theme**, accessible styling, and **drag‑and‑drop** upload
+Lecturers who receive a calendar-style Excel timetable and want an up-to-date personal calendar with classroom sessions, while optionally including:
 
-***
+* **Public Holidays**
+* **NOT AVAIL** days
 
-## Quick Start (GitHub Pages or local)
+---
 
-1.  **Clone** or download the repository.
-2.  Folder layout must be:
-        /timetable-converter/
-          index.html
-          /styles/
-            styles.css
-          /js/
-            app.js
-            xlsx.full.min.js   ← local SheetJS (no CDN required)
-3.  Open `index.html` directly in a browser, or host via GitHub Pages:
-    *   In the repo settings → **Pages** → Source: **main** → **/(root)** → Save.
-    *   URL will be `https://<your-username>.github.io/timetable-converter/`.
+🔗 [Live Site](https://jesselsookha.github.io/Excel-ICS-Converter/)
 
-> Note: If a browser/extension blocks local scripts on `file://`, use a simple local server (e.g., VS Code Live Server). No backend is required.
+---
 
-***
+## ◈ Contents
 
-## File & Folder Structure
+* [Features](#features)
+* [Quick Start (GitHub Pages or local)](#quick-start-github-pages-or-local)
 
-    index.html              → UI layout and tutorial content
-    styles/styles.css       → Light theme, SA palette, responsive layout
-    js/app.js               → Excel parsing, holiday logic, ICS generation
-    js/xlsx.full.min.js     → Local SheetJS build (Excel reader)
+  * [File & Folder Structure](#file--folder-structure)
+  * [Usage Walkthrough](#usage-walkthrough)
 
-***
+    * [1) Export the Excel Timetable](#1-export-the-excel-timetable)
+    * [2) Convert to ICS](#2-convert-to-ics)
+    * [3) Import into Outlook / Apple / Google](#3-import-into-outlook--apple--google)
+    * [4) Recommended Update Workflow](#4-recommended-update-workflow)
+* [Public Holidays (South Africa)](#public-holidays-south-africa)
+* [Configuration: Update Holidays for a New Year](#configuration-update-holidays-for-a-new-year)
+* [Data Handling & Privacy](#data-handling--privacy)
+* [Troubleshooting](#troubleshooting)
+* [Technical Notes](#technical-notes)
+* [Disclaimer](#disclaimer)
+* [Author](#author)
+* [License](#license)
 
-## Usage Walkthrough
+---
 
-### 1) Export the Excel Timetable
+## ◉ Features
 
-*   Go to the **live timetable** site: `masterscheduler.org` (sign in with Microsoft).
-*   Click the **Excel** button to download your timetable.
+* **Excel → ICS** in one page
+* **Local parsing** using a local copy of SheetJS (no network calls)
+* **Public Holiday recognition** for South Africa (by date)
+* Optional inclusion of **Holidays** and **NOT AVAIL** as **single all-day blocks** per day
+* **Stable UIDs** to reduce duplicate imports
+* **Calendar metadata** (default: *Teaching Timetable*)
+* **Next 7 Days preview** and **Subjects & Groups summary**
+* Clean **light theme** with **drag-and-drop upload**
 
-### 2) Convert to ICS
+---
 
-*   Open this tool in your browser.
-*   Drag & drop the Excel file (or click **Browse**).
-*   Set **Year** (e.g., `2026`).
-*   (Optional) Set **Calendar name** (default: `Teaching Timetable`).
-*   Tick **Include Holidays & NOT AVAIL** if you want those in your calendar:
-    *   The tool collapses multiple “NOT AVAIL” / Holiday entries for the same day into **one all‑day** entry.
-*   Click **Parse Excel**.
-*   Review **Stats**, **Subjects & Groups**, and **Next 7 Days**.
-*   Click **Download ICS**.
+## ◉ Quick Start (GitHub Pages or local)
 
-### 3) Import into Outlook / Apple / Google
+1. **Clone** or download the repository.
 
-**Outlook (desktop/web)**
+2. Ensure folder layout:
 
-*   Open **Outlook Calendar** → Import the ICS.
-*   A separate calendar named **Teaching Timetable** (or your chosen name) will be created and shown alongside your main calendar.
+```
+/timetable-converter/
+  index.html
+  /styles/
+    styles.css
+  /js/
+    app.js
+    xlsx.full.min.js
+```
 
-**Apple Calendar (macOS / iOS)**
+3. Open locally or host via GitHub Pages:
 
-*   macOS Calendar → **File → Import…** → choose the ICS → **New Calendar**.
-*   On iOS, share the ICS file to the Calendar app and add to a new calendar.
+* Go to **Settings → Pages**
+* Source: **main branch / (root)**
+* Save
 
-**Google Calendar (web)**
+Your site will be available at:
 
-*   Go to **calendar.google.com** → Left “Other calendars” → **+** → **Import**.
-*   Choose ICS and **create a new calendar** or import into your existing timetable calendar.
+```
+https://<your-username>.github.io/timetable-converter/
+```
 
-### 4) Recommended Update Workflow
+> ◊ Note: If scripts are blocked on `file://`, use a local server (e.g., VS Code Live Server).
 
-When the timetable changes:
+---
 
-1.  Export the **new Excel** from the system.
-2.  Convert to a **new ICS** with this tool.
-3.  In your calendar app, **delete the old “Teaching Timetable” calendar**.
-4.  **Import** the new ICS into a **fresh** “Teaching Timetable” calendar.
-5.  Done.
+## ◉ File & Folder Structure
 
-This avoids duplicates and ensures a clean, current timetable.
+```
+index.html              → UI layout and guidance
+styles/styles.css       → Styling and layout
+js/app.js               → Core logic (parsing + ICS generation)
+js/xlsx.full.min.js     → Local SheetJS library
+```
 
-***
+---
 
-## Public Holidays (South Africa)
+## ◉ Usage Walkthrough
 
-The converter recognises South African **Public Holidays** by **date** for the chosen year (e.g., **2026**, including observed Mondays where applicable) based on the Public Holidays Act (Act 36 of 1994) and official listings.  [\[timetiki.com\]](https://timetiki.com/holidays/south-africa/good-friday/)
+### ◇ 1) Export the Excel Timetable
 
-*   **Good Friday** and **Family Day** are **movable** (Easter‑related) and are set for the specific year (e.g., **3 Apr 2026** and **6 Apr 2026**). [\[timetiki.com\]](https://timetiki.com/holidays/south-africa/good-friday/), [\[labourguide.co.za\]](https://labourguide.co.za/general/public-holidays-that-falls-on-sundays)
+* Go to the timetable system (`masterscheduler.org`)
+* Sign in with Microsoft
+* Click **Excel** to download your timetable
 
-If you tick **Include Holidays & NOT AVAIL**, the ICS will add **one all‑day event** per holiday day.
+---
 
-***
+### ◇ 2) Convert to ICS
 
-## Configuration: Update Holidays for a New Year
+* Open the tool in your browser
 
-You prefer to maintain holidays centrally in code (no “admin panel”). Update this block in **`js/app.js`**:
+* Drag & drop the Excel file (or click **Browse**)
+
+* Set:
+
+  * **Year** (e.g., `2026`)
+  * **Calendar name** (optional)
+
+* Optional:
+
+  * Tick **Include Holidays & NOT AVAIL**
+
+  ◊ The tool collapses multiple entries into **one all-day event per day**
+
+* Click **Parse Excel**
+
+* Review preview sections
+
+* Click **Download ICS**
+
+---
+
+### ◇ 3) Import into Outlook / Apple / Google
+
+**Outlook**
+
+* Open Calendar → Import ICS
+* A new calendar will be created
+
+**Apple Calendar**
+
+* macOS: File → Import
+* iOS: Share file → Add to Calendar
+
+**Google Calendar**
+
+* Go to calendar.google.com
+* Other calendars → **+ → Import**
+
+---
+
+### ◇ 4) Recommended Update Workflow
+
+When changes occur:
+
+1. Export updated Excel
+2. Convert to new ICS
+3. Delete old **Teaching Timetable** calendar
+4. Import new ICS into a fresh calendar
+
+✔ This avoids duplicates and keeps things clean
+
+---
+
+## ◉ Public Holidays (South Africa)
+
+The tool recognises South African public holidays **by date** for the selected year.
+
+* Includes observed Mondays where applicable
+* Based on official holiday listings
+
+◊ Movable holidays:
+
+* **Good Friday**
+* **Family Day**
+
+If enabled, holidays are added as **single all-day events**
+
+---
+
+## ◉ Configuration: Update Holidays for a New Year
+
+Update in `js/app.js`:
 
 ```js
 const HOLIDAYS_BY_YEAR = {
   2026: [
     { date: '2026-01-01', name: "New Year's Day" },
-    // …
     { date: '2026-12-26', name: 'Day of Goodwill' }
   ],
   2027: [
-    // Add official dates for 2027 here
+    // Add new dates here
   ]
 };
 ```
 
-Notes:
+### ◊ Notes
 
-*   Keep **ISO dates** (`YYYY-MM-DD`).
-*   Include **observed Mondays** when a holiday falls on a **Sunday**, per the Public Holidays Act. 
-*   For **Good Friday / Family Day**, use the official calendar for the relevant year.
-  
-***
+* Use `YYYY-MM-DD` format
+* Include observed Mondays
+* Verify Easter-related dates annually
 
-## Data Handling & Privacy
+---
 
-*   Files are parsed **locally** in your browser using `xlsx.full.min.js`.
-*   The tool does **not** send data to a server.
-*   The ICS file is generated in memory and downloaded directly.
+## ◉ Data Handling & Privacy
 
-***
+* All processing happens **locally in your browser**
+* No uploads or server communication
+* ICS file is generated and downloaded directly
 
-## Troubleshooting
+---
 
-● **“XLSX is not defined”**  
-Ensure `./js/xlsx.full.min.js` exists and is referenced **above** `app.js` in `index.html`.  
-Some browsers/extensions block scripts on `file://`. If so, serve locally (e.g., Live Server) or use GitHub Pages.
+## ◉ Troubleshooting
 
-● **Days off by one (e.g., Tuesday shows Monday’s data)**  
-The app formats dates as pure `YYYY-MM-DD` strings to avoid timezone shifts. If you changed that, restore the “manual YYYY-MM-DD” logic in `parseDateLabel()`.
+**XLSX is not defined**
 
-● **Multiple NOT AVAIL periods appear as many events**  
-Tick **Include Holidays & NOT AVAIL** to have them **collapsed** into a single **all‑day** block per day.
+* Ensure `xlsx.full.min.js` loads before `app.js`
 
-● **Duplicates after re-import**  
-Use the recommended **delete‑and‑import** workflow (delete the old “Teaching Timetable” calendar first).  
-Stable `UID`s minimize duplicates if someone re‑imports without deleting, but the cleanest approach is still **replace**.
+**Dates are incorrect**
 
-***
+* Use `YYYY-MM-DD` formatting logic (avoid timezone shifts)
 
-## Technical Notes
+**Too many NOT AVAIL entries**
 
-*   **Parsing model** (Excel):
-    *   Finds week markers like `w8` in **Column A**.
-    *   Reads **day+date headers** from the **same row** (Columns **B–G**).
-    *   Iterates **time rows** below (e.g., `08H00 - 08H50`) and collects cell contents for **B–G**.
-    *   Extracts **module\_code**, **group**, **course\_code** (before “Group”), and **location** (e.g., `LR35 - CR`) from cell text.
-    *   Converts day+month to `YYYY-MM-DD` using the chosen **Year** (no timezone conversions).
+* Enable collapse option via checkbox
 
-*   **ICS generation**:
-    *   Adds `X-WR-CALNAME` and `X-WR-CALDESC`.
-    *   Generates stable `UID`s (based on date, time, module/course, group, location).
-    *   **Classes** are time‑bounded events.
-    *   **Holidays** / **NOT AVAIL** (if included) are **all‑day** events, **one per day**.
+**Duplicate events after import**
 
-*   **Libraries**:
-    *   The project uses a **local** copy of **SheetJS** (`xlsx.full.min.js`) to parse Excel in the browser.
+* Follow **delete + re-import workflow**
 
-***
+---
 
-## License
+## ◉ Technical Notes
 
-This project is provided for campus/lecturer use.  
+### ◇ Parsing Logic
 
-***
+* Detects week markers (`w8`) in Column A
+* Reads headers (Columns B–G)
+* Iterates time rows
+* Extracts:
 
-### Maintainer Notes (for your future self)
+  * Module code
+  * Group
+  * Course code
+  * Location
 
-*   When a new year approaches, update **`HOLIDAYS_BY_YEAR`** in `app.js`.
-*   Verify Easter dates (Good Friday, Family Day) and any observed Mondays from the official government listing.
-***
+---
+
+### ◇ ICS Generation
+
+* Adds calendar metadata
+* Generates stable UIDs
+* Creates:
+
+  * Timed class events
+  * All-day holiday/NOT AVAIL events
+
+---
+
+### ◇ Libraries
+
+* Uses local **SheetJS** (`xlsx.full.min.js`)
+* No CDN or external dependency
+
+---
+
+## ◉ Disclaimer
+
+This tool was developed specifically for the internal timetable format used at this institution.
+
+The imported Excel file must follow the expected structure defined by the campus scheduling system.
+
+* It may not work with other institutional formats
+* Structural differences may result in parsing errors
+
+This tool is intended for **internal lecturer use only**.
+
+---
+
+## ◉ Author
+
+**Jessel Sookha**  
+📧 [jsookha@emeris.ac.za](mailto:jsookha@emeris.ac.za)
+
+Developed for internal academic use.
+
+---
+
+## ◉ License
+
+This project is provided for campus/lecturer use.
+
+---
+
+### ◊ Maintainer Notes
+
+* Update `HOLIDAYS_BY_YEAR` annually
+* Verify Easter dates and observed holidays
+* Test with latest exported timetable format
+
+---
+![Version](https://img.shields.io/badge/version-1.0-blue)
+![Maintained](https://img.shields.io/badge/Maintained-yes-brightgreen)
+
