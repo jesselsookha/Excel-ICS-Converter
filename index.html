@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Excel → ICS: Teaching Timetable Converter</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./styles/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <h1 class="title">Teaching Timetable Converter</h1>
+      <p class="subtitle">Upload your Excel timetable → Download ICS → Import into Outlook / Apple / Google</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Controls -->
+    <section class="card" aria-labelledby="controls-heading">
+      <h2 id="controls-heading" class="section-title">Step 1: Upload & Settings</h2>
+
+      <!-- Drag & drop zone -->
+      <div id="dropzone" class="dropzone" aria-label="Drag and drop Excel here">
+        <div class="dz-inner">
+          <div class="dz-title">Drag & drop your Excel timetable here</div>
+          <div class="dz-sub">or</div>
+          <div class="file-input">
+            <input id="fileInput" type="file" accept=".xls,.xlsx" />
+            <span id="fileName">No file selected</span>
+            <button type="button" class="btn btn-secondary" id="btnChooseFile" aria-label="Choose file">Browse</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Options row -->
+      <div class="controls-grid">
+        <!-- Year -->
+        <div class="control-group">
+          <label class="label" for="yearInput">Year for dates</label>
+          <input class="input" id="yearInput" type="number" value="2026" min="2000" max="2100" />
+        </div>
+
+        <!-- Calendar name -->
+        <div class="control-group">
+          <label class="label" for="calNameInput">Calendar name (ICS)</label>
+          <input class="input" id="calNameInput" type="text" value="Teaching Timetable" />
+        </div>
+
+        <!-- ICS options -->
+        <div class="control-group">
+          <span class="label">ICS options</span>
+          <label class="checkbox">
+            <input type="checkbox" id="includeExtras" />
+            <span>Include Holidays & “NOT AVAIL”</span>
+          </label>
+        </div>
+
+        <!-- Parse & Download -->
+        <div class="actions">
+          <button class="btn btn-primary" id="btnParse">Parse Excel</button>
+          <button class="btn btn-accent" id="btnDownloadICS" disabled>Download ICS</button>
+        </div>
+      </div>
+
+      <div id="parseStatus" class="status">No file parsed yet.</div>
+    </section>
+
+    <!-- Preview & Summary -->
+    <section class="card" aria-labelledby="preview-heading">
+      <h2 id="preview-heading" class="section-title">Step 2: Preview</h2>
+
+      <div class="summary-grid">
+        <!-- Stats -->
+        <div class="summary-card">
+          <h3 class="summary-title">Stats</h3>
+          <div id="stats" class="stats mono"></div>
+        </div>
+
+        <!-- Subjects & Groups -->
+        <div class="summary-card">
+          <h3 class="summary-title">Subjects & Groups</h3>
+          <div id="subjects" class="chips"></div>
+        </div>
+      </div>
+
+      <h3 class="summary-title" style="margin-top:12px">Next 7 Days (Compact)</h3>
+      <div id="next7" class="next7-list"></div>
+    </section>
+
+    <!-- Tutorial / Workflow -->
+    <section class="card" aria-labelledby="tutorial-heading">
+      <h2 id="tutorial-heading" class="section-title">Step 3: Import to Your Calendar (Recommended Workflow)</h2>
+
+      <ol class="tutorial">
+        <li><strong>Go to the live timetable</strong>: <code class="mono">masterscheduler.org</code> (Sign in with Microsoft).</li>
+        <li><strong>Export</strong>: Click the <em>Excel</em> button to download your timetable (.xls/.xlsx).</li>
+        <li><strong>Upload here</strong>: Drag & drop (or <em>Browse</em>), set the <em>Year</em> and optional <em>Calendar name</em>.</li>
+        <li><strong>Parse</strong>: Click <em>Parse Excel</em> to preview stats and the next 7 days.</li>
+        <li><strong>Download ICS</strong>: Click <em>Download ICS</em> (defaults to “Teaching Timetable”).</li>
+      </ol>
+
+      <h3 class="summary-title">Outlook: First Import</h3>
+      <ol class="tutorial">
+        <li>Open Outlook Calendar.</li>
+        <li>Import the ICS file. Outlook will create a new calendar named <em>Teaching Timetable</em> (or your chosen name).</li>
+        <li>Toggle visibility to view your main calendar + timetable side by side.</li>
+      </ol>
+
+      <h3 class="summary-title">Outlook: Updates (recommended)</h3>
+      <ol class="tutorial">
+        <li>When you receive timetable changes, re‑export Excel and convert to ICS here.</li>
+        <li>In Outlook, <strong>Right‑click “Teaching Timetable” → Delete Calendar</strong>.</li>
+        <li>Import the new ICS. <strong>Done.</strong></li>
+      </ol>
+
+      <h3 class="summary-title">Apple Calendar (macOS / iOS)</h3>
+      <ol class="tutorial">
+        <li>Open Calendar → <em>File → Import…</em> → select the ICS.</li>
+        <li>Choose <em>New Calendar</em> (name will be “Teaching Timetable” by default).</li>
+        <li>For updates, delete the old Timetable calendar and import the new ICS.</li>
+      </ol>
+
+      <h3 class="summary-title">Google Calendar (Web)</h3>
+      <ol class="tutorial">
+        <li>Go to <em>calendar.google.com</em> → left panel “Other calendars” → <em>+</em> → <em>Import</em>.</li>
+        <li>Select the ICS and choose <em>New calendar</em> or your existing Timetable calendar.</li>
+        <li>For updates, remove the old Timetable calendar (Settings → “Remove calendar”) and import the new ICS.</li>
+      </ol>
+
+      <p class="note">We use official SA public holidays for 2026 (incl. observed days) and merge Holidays/NOT AVAIL entries into one all‑day block per day in ICS for a clean calendar. [1](https://www.gov.za/about-sa/public-holidays)[2](https://www.gov.za/sites/default/files/gcis_document/201409/act36of1994.pdf)</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Built for lecturers • Excel → ICS with local parsing • Ready for GitHub Pages</p>
+    </div>
+  </footer>
+
+  <script src="./js/xlsx.full.min.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>
