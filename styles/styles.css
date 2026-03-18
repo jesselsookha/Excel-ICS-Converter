@@ -1,0 +1,196 @@
+/* =========================
+   Light theme with your palette
+   ========================= */
+:root {
+  --hunter-green: #386641;
+  --sage-green: #6a994e;
+  --yellow-green: #a7c957;
+  --vanilla-cream: #f2e8cf;
+  --blushed-brick: #bc4749;
+
+  /* neutrals */
+  --ink-900: #1f2a24;
+  --ink-700: #3c4a42;
+  --ink-500: #5c6b62;
+  --line: #d8d2c2;
+  --surface: #ffffff;
+  --surface-soft: #fffdf7;
+  --focus: #264e2f2e;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  font-size: 14px;
+  line-height: 1.5;
+  background: var(--vanilla-cream);
+  color: var(--ink-900);
+}
+
+/* Mono utility for code-like details (stats, times) */
+.mono {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+/* Layout */
+.container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+
+.site-header { background: var(--surface); border-bottom: 1px solid var(--line); }
+.header-inner { padding: 12px 0; }
+.title { margin: 0; color: var(--hunter-green); font-weight: 800; font-size: 24px; letter-spacing: 0.2px; }
+.subtitle { margin: 2px 0 0; color: var(--ink-700); }
+
+.site-footer { border-top: 1px solid var(--line); background: var(--surface); color: var(--ink-700); }
+.site-footer .container { padding: 14px 20px; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+  margin: 18px 0;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+}
+
+.section-title { margin: 0 0 12px; color: var(--hunter-green); font-size: 18px; font-weight: 800; }
+
+/* Dropzone */
+.dropzone {
+  border: 2px dashed var(--sage-green);
+  border-radius: 16px;
+  background: var(--surface-soft);
+  padding: 18px;
+  margin-bottom: 16px;
+  transition: background .2s, border-color .2s;
+}
+.dropzone.dragover { border-color: var(--yellow-green); background: #fff; }
+.dz-inner { text-align: center; }
+.dz-title { font-weight: 700; color: var(--hunter-green); }
+.dz-sub { color: var(--ink-700); margin: 4px 0 10px; }
+
+/* Controls */
+.controls-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  align-items: end;
+}
+@media (max-width: 960px) { .controls-grid { grid-template-columns: 1fr; } }
+
+.label {
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--ink-500);
+  margin-bottom: 6px;
+  letter-spacing: 0.6px;
+}
+
+.input, .file-input, .checkbox {
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 12px;
+  color: var(--ink-900);
+  width: 100%;
+}
+
+.input { outline: none; }
+.input:focus { border-color: var(--sage-green); box-shadow: 0 0 0 4px var(--focus); }
+
+/* File input (styled wrapper) */
+.file-input {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: center;
+  position: relative;
+}
+.file-input input[type="file"] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer;
+}
+#fileName {
+  color: var(--ink-700);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.file-input .btn { justify-self: end; }
+
+/* Checkbox */
+.checkbox { display: flex; align-items: center; gap: 8px; padding: 8px 12px; }
+.checkbox input { transform: translateY(1px); }
+
+/* Actions row */
+.actions { grid-column: 1 / -1; display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* Buttons */
+.btn {
+  appearance: none;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 14px;
+  cursor: pointer;
+  background: var(--surface-soft);
+  color: var(--ink-900);
+  transition: transform .05s ease, filter .15s ease;
+}
+.btn:hover { filter: brightness(0.98); }
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: .55; cursor: not-allowed; }
+
+.btn-primary   { background: var(--sage-green);   border-color: var(--sage-green);   color: #fff; }
+.btn-accent    { background: var(--hunter-green); border-color: var(--hunter-green); color: #fff; }
+.btn-secondary { background: #fff;                border-color: var(--sage-green);   color: var(--hunter-green); }
+
+/* Status (mono for clarity) */
+.status {
+  margin-top: 10px;
+  color: var(--ink-700);
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+/* Summary area */
+.summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 960px) { .summary-grid { grid-template-columns: 1fr; } }
+
+.summary-card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 12px; }
+.summary-title { margin: 0 0 8px; color: var(--hunter-green); font-weight: 700; }
+
+.stats { color: var(--ink-700); }
+.stats .row {
+  display: flex; justify-content: space-between;
+  padding: 4px 0; border-bottom: 1px dashed var(--line);
+}
+.stats .row:last-child { border-bottom: 0; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  background: #fff; border: 1px solid var(--line);
+  color: var(--ink-900); padding: 6px 10px; border-radius: 999px; font-size: 12px;
+}
+
+/* Next 7 days (compact list) */
+.next7-list { display: grid; gap: 10px; }
+.day-item {
+  background: #fff; border: 1px solid var(--line);
+  border-radius: 12px; padding: 10px 12px;
+}
+.day-head { margin: 0 0 6px; color: var(--hunter-green); font-weight: 700; font-size: 14px; }
+
+.event {
+  display: grid;
+  grid-template-columns: auto 60px 1fr;
+  gap: 10px; align-items: start;
+  padding: 6px 0; border-top: 1px dashed var(--line);
+}
+.event:first-child { border-top: 0; }
+.dot { width: 10px; height: 10px; border-radius: 50%; align-self: center; }
+.event-time { font-weight: 700; color: var(--ink-900); font-size: 13px; }
+.event-title { font-weight: 700; color: var(--ink-900); font-size: 13px; }
+.event-meta { color: var(--ink-700); font-size: 12px; }
+
+/* Tutorial */
+.tutorial { margin: 8px 0 0 18px; }
+.tutorial li { margin: 6px 0; }
+.note { color: var(--ink-700); margin-top: 8px; }
